@@ -1,0 +1,48 @@
+@import './base.css';
+
+#app {
+  max-width: 1328px;
+  padding: 0 24px;
+  margin: 0 auto;
+  font-weight: normal;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+}
+
+a {
+  text-decoration: none;
+  color: #BB86FC;
+  transition: color .5s ease;
+}
+
+a:hover {
+  color: #caa1ff;
+}
+
+.link-gray {
+  cursor: pointer;
+  color: #ABABAB;
+}
+
+.link-gray:hover {
+  color: #ffffff;
+}
+
+.v-btn.v-btn--variant-plain .v-btn__content {
+  text-transform: capitalize;
+}
+
+.text-h5, .text-h4, .text-h3, .text-h2, .text-h1 {
+  color: white;
+}
+
+.icon-button {
+  cursor: pointer;
+  transition: color .5s ease;
+  color: var(--color-text) !important;
+}
+
+.icon-button:hover {
+   color: white !important;
+ }

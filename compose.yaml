@@ -1,0 +1,68 @@
+version: "3.8"
+
+services:
+  web:
+    depends_on:
+      - api
+    build: ./movies-front
+    ports:
+      - "5173:5173"
+    environment:
+      VITE_API_URL: http://localhost:3333/
+      VITE_UPLOADS_URL: http://localhost:3333/uploads/
+    develop:
+      watch:
+        - path: ./frontend/package.json
+          action: rebuild
+        - path: ./frontend/package-lock.json
+          action: rebuild
+        - path: ./frontend
+          target: /app
+          action: sync
+
+  api:
+    depends_on:
+      - db
+    build: ./movies-api
+    ports:
+      - "3333:3333"
+    environment:
+      PORT: 3333
+      HOST: 0.0.0.0
+      NODE_ENV: development
+      APP_KEY: PXSItDWveiereYS2W_ywej4ZGAO6rkjs
+      DRIVE_DISK: local
+      DB_CONNECTION: mysql
+      MYSQL_HOST: db
+      MYSQL_PORT: 3306
+      MYSQL_USER: root
+      MYSQL_PASSWORD: root
+      MYSQL_DB_NAME: movies_api
+      SESSION_DRIVER: cookie
+      JWT_PRIVATE_KEY: -----BEGIN PRIVATE KEY-----\nMIIJQQIBADANBgkqhkiG9w0BAQEFAASCCSswggknAgEAAoICAQC2u3ctO6FACp5Z\nkrXjOp2MOTiKE+7P2rH+1yUF7TKuY0NFjsvtL+KkmipEUPTFsGx2P+BqmdeHbr3J\nxroWx3ptaHUTeAEWNKcm2GzvbmhEKxKkvg2E3m4Ye/EaMYbTPzEjKXheXNbDV2Y6\nO8yoeV1OegHZQvx6tytnygGt7EGP23+kfbO0PG1a7gklDAfuIeMBNIb9gZxObJDq\nS5rZx1CvK493zPahizCVZglK996z1ys/BUMP5tENfOiFYCzv0c0sQmgZHwxkPKjm\nlKMS+TGFwJR4Yc/sE6M0GrTMieEUd8FOM3tjaJNREyifkRrM1pWYFJ233WkxTgiV\nDu1fCao31+cCzZObN4S892Px5EgRzNFb5YHYEd5a7tfaCa4Xs+ElnoVEgJewsTbT\noS5h3knr0HHJWf+gNnGZNDc05g9Q/nEOU1wrG0bGPYgUuIomLGnL8BAw9zBPl2Ab\n9O7I8Hv6bis1ZFii/pe+U9r9cZ/qF6pCNmU2A0KuAAbnAT3MuQ0GTAhvphpOYxW0\nWdDBBeOwXUjXmlEZe1+z5kSagh6q0/mRnZlClVSVmx97PLoQEkuB/E10Q2/cW5xq\nGZ/bODno9iZsLJCOjFRgUy4C8K6HVq2fZdiv+jdEF2IPa2ovMdPnPlg+fdktlGrs\n9QVODyP5WscWGInN7cb4WK+d8hv1bwIDAQABAoICAEPJ8vHYW78u0UTIjOpxrc29\n0pBCycbZSkwQk18J+lHAaE3vJg7lQ06uFH0IjW2jP/F0S/QwA0luV0D6FMHrmarp\n4/jnfXu358Sc6HjAfDTBx+ZOzSQcAjraC/0cH3jRyhBRy6IyDcgk7bsvwQJFF8zL\nrVDkrVZ3Cka0JYBYk4/jLYyfx2FXQ3hGsyTHvE9mydiCHIwCH7LmSrJoftdIvlFl\ntxEJ+/q88LaTxmHF55vO+G+mK5VEGwzGaFpGbhU/vz4qmoSrRIURDdWQkZix0mHc\nqheoraJWPKbRO35frhzSOmeg6Kbdvj0G/vyHL6qK9q8XAtWZcXNFkCCAC6ZEpxzz\nroAmToPUp5tS/WBEC42L4UqtE8ITcBo7bws3qD8ODTOc1lZx6gtiRCc2jEsWUU/K\nQ8M7z8aYVYDpK8WnyFSwrQuZgWLXR3tEyu1LE/HtYwNuUqZTjvpV4hblQOojVT/P\n7n3RUqHxUDZzDFd03CJG1kQa+sAVkOxpLPE143Zek0hkoSMKGhjrNUayiWCyM21T\nXQpTXrJN6DcPNlNKxBt26CO0ypGBBOIZ/TL5w6zT9cqGL7NYeBb/3KonpdvQvW8w\nmqMfbdVjOnkLoovh18L1g+2ZgE/ykd6t4QzmV5+DFUUzmskyyliyGCCF7Vzcw3BG\nfDqYGl62SDnTLkeoiskZAoIBAQC/Q8bjaVvspkKDsqCu7O1R/PflfqzIHMmlpFH5\nygdRaS9kvJzETvsdwBGflU8t6ahKl2asI1wuZoX724oxQsja3t0mjoFbbVRckP6o\ntQqmNB29lbDhuCxnKgtu432h/ScCE7squADY/TtFenuEtkGIs/lBpnlCYHX/tPkv\npGC4wIjxZ3JIfNhDVevuUvHM/L/NQSI/HulYhz0UEu55Ce1/s9i6O8S33+g+9sQp\nArvP0dB/olz76qoAUxfzcoDfA6r/DhNni5TpYARIy5Q4S8jGGCtE6cneQ8fxWWuz\noTAQODT3gno8IADZX//kMnIYqfJgCrsASs0GowHwYnrnkjxJAoIBAQD0lGOeUvlh\nL+dWTXJnWNdAXa9ci//IfPHPYGmDgX/yjsW7PXOQaac0hhFrB8eHHJrcCXfqnwQp\nx2jW5lfOcaAGcva5kWdtXjDG4Ens1xef9IEfMVmR3htbFUXF9I6E/LHaIgqOR8mT\nTd6nxMJquWkY2ftsnXlILY2Baf1/wacSVZZo+EXShfxMjOZXc/DY/K19026y0/52\nOUSd69WrHGnG5r6PHYLMF/1L6KSj3/IqMr1xi/cYDxjzAqrXc+bA/8itDuz49lSY\nc+gRG04cgoOgvhtoREM31H5rmvyq4t0v43kyf096UbuBwipfn3NrMD2uat3hAM1V\nL4MoNkdld3P3AoIBAB0MzE6KGB4venbKUMGA1uLXC0feH5wdUztHY/QOjWH+Geax\nBxaB8H4qSAL3CJmunZMGv99xV3TsuXjxdWHaBOvJYcmTZ25dgqy0kRlKth1cWRAM\nhlsiQAxDRI1JHDHYY25bVNg+LlLG05PP8KbNj9KVk0w3Xr+IKyP1dsuXqeElzSbt\nUVxVKfvANx9xlaxOz0r7k5oGteZuVAaSgYn8ygfVZxuSLGTJK1s028Jm2ePMuGBK\nZtkUYVG/TSn6wDwfMH+gwa2+c5Wmsb/ku9R5HjuIPDoxUCnkHaA4trUHzGcKQnE9\nbhdnvPlHLXSZfN7mIRwZRSHcOpvBcm/yZTx655ECggEASqZb/X/v08UOQ94hk/+e\nu2uc0Y99g5D3MUeJDPViuwLuwSaRdjt5KGPfPx7BvLBzZ8OQEVF1sNbHXggyNrWh\nlTZTrfH+cng0RQ9CIQLJmC3Fl2K1pvr2uIc2o6PwOBD0q9KGDEVG9innUqeQe4iZ\n1lb6EX3C/c/BiAV0tSDDQKpU3TciAI6aojbDO2AM2/3LakM1X2mrGiSCl/zaW36x\nnl7hPMdSG78ataeNUONSg6S3A8gno/U/tTRUNqyOesvXUVLj610sFtgRtd7yqWsA\nh/heXyWuqoS2DVvh0Lqrriks3cfT107I/2LnEgaV8NppiSnfDQT0pxJ4YramdgbO\nowKCAQA5euJL6twfkwgCHWvr5oCM5grf9K1TnnmPt4e1JpyohUofMAdnqLYuVXAS\nqA8FszP4EtbFmlMukhnbZ4lhNa5YluP1oiSQ7iSFCf/u3s2kH74T9dWiNQPnYGX9\ngtF8CJCXHHTDC2zdF8Etef6w1Gz1CE6wvk4B/3G/NlLwDBTPaK/wfZ2AEvnG/Hot\nmg3KBnHxD8ptIgp/7HcbMPXbH2omcC6E49Sb9pXEx4okl+3rwbKpXmH98ancs6tX\ncBR2M1cKsbMwPm9wb9WPojeeoprOZ2W/y8ffVIJpZumB+uuVfbHiulaPomiT3yeU\nDiIdGe9WjxdBB0t1ffjihBaCF8wt\n-----END PRIVATE KEY-----\n
+      JWT_PUBLIC_KEY: -----BEGIN PUBLIC KEY-----\nMIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEAtrt3LTuhQAqeWZK14zqd\njDk4ihPuz9qx/tclBe0yrmNDRY7L7S/ipJoqRFD0xbBsdj/gapnXh269yca6Fsd6\nbWh1E3gBFjSnJths725oRCsSpL4NhN5uGHvxGjGG0z8xIyl4XlzWw1dmOjvMqHld\nTnoB2UL8ercrZ8oBrexBj9t/pH2ztDxtWu4JJQwH7iHjATSG/YGcTmyQ6kua2cdQ\nryuPd8z2oYswlWYJSvfes9crPwVDD+bRDXzohWAs79HNLEJoGR8MZDyo5pSjEvkx\nhcCUeGHP7BOjNBq0zInhFHfBTjN7Y2iTURMon5EazNaVmBSdt91pMU4IlQ7tXwmq\nN9fnAs2TmzeEvPdj8eRIEczRW+WB2BHeWu7X2gmuF7PhJZ6FRICXsLE206EuYd5J\n69BxyVn/oDZxmTQ3NOYPUP5xDlNcKxtGxj2IFLiKJixpy/AQMPcwT5dgG/TuyPB7\n+m4rNWRYov6XvlPa/XGf6heqQjZlNgNCrgAG5wE9zLkNBkwIb6YaTmMVtFnQwQXj\nsF1I15pRGXtfs+ZEmoIeqtP5kZ2ZQpVUlZsfezy6EBJLgfxNdENv3Fucahmf2zg5\n6PYmbCyQjoxUYFMuAvCuh1atn2XYr/o3RBdiD2tqLzHT5z5YPn3ZLZRq7PUFTg8j\n+VrHFhiJze3G+FivnfIb9W8CAwEAAQ==\n-----END PUBLIC KEY-----\n
+    develop:
+      watch:
+        - path: ./movies-api/package.json
+          action: rebuild
+        - path: ./movies-api/package-lock.json
+          action: rebuild
+        - path: ./movies-api
+          target: /app
+          action: sync
+
+  db:
+    image: mysql:5.7
+    restart: always
+    environment:
+      MYSQL_DATABASE: movies_api
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - "3306:3306"
+
+  adminer_container:
+    image: adminer:latest
+    environment:
+      ADMINER_DEFAULT_SERVER: db
+    ports:
+      - "8080:8080"

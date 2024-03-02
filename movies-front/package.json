@@ -5,10 +5,10 @@
   "scripts": {
     "dev": "vite --host",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "start": "npm run build && npm run preview"
   },
   "dependencies": {
-    "@mdi/font": "^7.3.67",
     "@websanova/vue-auth": "^4.2.1",
     "axios": "^1.6.1",
     "moment": "^2.29.4",

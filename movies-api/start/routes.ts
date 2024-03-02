@@ -9,11 +9,10 @@ Route.get('/genres/', 'GenresController.index')
 Route.get('/types/', 'TypesController.index')
 Route.get('/directors/', 'DirectorsController.index')
 Route.get('/directors/:id', 'DirectorsController.show')
+Route.get('/movies/', 'MoviesController.index')
+Route.get('/movies/:id', 'MoviesController.show')
 
 Route.group(() => {
-  Route.get('/movies/', 'MoviesController.index')
-  Route.get('/movies/:id', 'MoviesController.show')
-
   Route.post('/logout/', 'AuthController.logout')
   Route.post('/profile/', 'AuthController.updateUser')
   Route.resource('/ratings/', 'RatingsController')

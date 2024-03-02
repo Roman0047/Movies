@@ -113,6 +113,9 @@ export default class MoviesController {
   }
 
   public async show({ params, auth }: HttpContextContract) {
+    await auth.use("jwt").authenticate();
+    const user = auth.use("jwt").user!
+
     return await Movie.query()
       .preload('genres')
       .preload('directors')
@@ -122,9 +125,9 @@ export default class MoviesController {
       .withCount('ratings', query =>
         query.avg('rating').as('rating')
       )
-      .if(auth.user, query => {
+      .if(user, query => {
         query.withCount('ratings', query =>
-          query.whereIn('user_id', [auth.user?.id]).avg('rating').as('user_rating')
+          query.whereIn('user_id', [user?.id]).avg('rating').as('user_rating')
         )
       })
       .where('id', params.id).firstOrFail()

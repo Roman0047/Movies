@@ -1,5 +1,5 @@
 <template>
-  <div class="movie pb-3">
+  <div v-once class="movie pb-3">
     <router-link :to="{ name: 'movie', params: { id: movie.id } }">
       <v-card class="mx-auto" max-width="374">
         <v-row v-if="movie.rating" align="center" class="mx-0 rating">
@@ -19,9 +19,9 @@
         </div>
 
         <v-card-item class="pb-1">
-          <div class="d-flex align-center justify-space-between" :class="{ 'is-admin-actions': isAdmin }">
+          <div class="d-flex align-center justify-space-between" :class="{ 'is-admin-actions': isAdmin && !noActions }">
             <v-card-title>{{ movie.name }}</v-card-title>
-            <div v-if="isAdmin" class="d-flex align-center">
+            <div v-if="isAdmin && !noActions" class="d-flex align-center">
               <router-link :to="{ name: 'movie-edit', params: { id: movie.id } }" class="link-gray mr-2">
                 <v-icon dark>mdi-pencil</v-icon>
               </router-link>
@@ -59,6 +59,10 @@ const props = defineProps({
     default: () => {
       return {}
     }
+  },
+  noActions: {
+    type: Boolean,
+    default: false
   }
 })
 
@@ -139,6 +143,10 @@ async function remove() {
 
   .delete-movie {
     margin-right: -4px;
+  }
+
+  .v-card-title {
+    width: 100%;
   }
 
   .is-admin-actions {

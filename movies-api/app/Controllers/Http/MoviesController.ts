@@ -24,7 +24,11 @@ export default class MoviesController {
       .if(year, query =>
         query.whereRaw(`release_date BETWEEN '${date}' and '${date.plus({ year: 1 })}'`)
       )
-      .if(countries, query => query.whereJson('countries', countries))
+      .if(countries, query => {
+        countries.forEach((country: string) => {
+          query.orWhereJson('countries', [country])
+        });
+      })
       .if(companies, query => query.whereIn('company_id', companies))
       .if(types, query => query.whereIn('type_id', types))
       .if(currentMovie, query => query.whereNot('id', currentMovie))
@@ -184,7 +188,7 @@ export default class MoviesController {
 
     movie.merge({
       ...payload,
-      release_date: DateTime.fromISO('2011-10-05T14:48:00.000Z'),
+      release_date: DateTime.fromISO(`${payload.release_date.toISO()}`),
       countries: JSON.stringify(payload.countries),
       video: payload.video?.clientName,
       image: payload.image?.clientName,

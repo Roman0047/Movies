@@ -45,7 +45,7 @@
       <div class="text-grey w-100"><b>Description:</b> {{ movie.description }}</div>
     </div>
     <h2 v-if="movies.length" class="text-h5 mt-8">Similar Movies</h2>
-    <Movies :movies="movies" />
+    <Movies :movies="movies" no-actions />
     <h2 class="text-h5 mt-5 mb-4">Comments</h2>
     <div class="comments">
       <div class="comment-wrapper">
@@ -62,7 +62,7 @@
         </div>
       </div>
       <div class="comments-list">
-        <div v-for="(item, index) in comments">
+        <div v-for="(item, index) in comments" :key="item.id">
           <v-divider class="my-2" v-if="index !== 0"></v-divider>
           <div class="item-comments-heading">
             <div class="d-flex align-center">

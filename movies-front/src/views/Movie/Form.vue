@@ -336,6 +336,7 @@ onMounted(async () => {
   input {
     padding-top: 10px;
     padding-bottom: 10px;
+    display: block;
   }
 }
 

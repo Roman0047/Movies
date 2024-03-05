@@ -20,7 +20,7 @@
         <div v-if="director.bio" class="text-grey"><b>Biography:</b> {{ director.bio }}</div>
       </div>
     </div>
-    <Movies :movies="movies" />
+    <Movies :movies="movies" no-actions />
     <v-pagination
         v-if="pagination.last_page !== 1"
         v-model="pagination.current_page"

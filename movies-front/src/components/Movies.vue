@@ -4,6 +4,7 @@
         v-for="movie in movies"
         :key="movie.id"
         :movie="movie"
+        :no-actions="noActions"
         @update:list="$emit('update:list')"
     />
   </div>
@@ -16,6 +17,10 @@ defineProps({
   movies: {
     type: Array,
     default: () => []
+  },
+  noActions: {
+    type: Boolean,
+    default: false
   }
 })
 

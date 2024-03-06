@@ -42,6 +42,14 @@ const Content = defineAsyncComponent(() =>
 </script>
 ```
 
+Use `NuxtImage` with the placeholder property to achieve the best lazy loading and image optimization result
+
+```vue
+<NuxtImg :src="item.img_1424x960" :placeholder="item.img_178x120" />
+```
+
+Use `useVirtualList` composable to render cards, posts and other large lists. [Example](https://vueuse.org/core/useVirtualList/)
+
 ### General vue optimization
 
 **Prevent all list items from being re-rendered** by passing clear props to components. It's more effective

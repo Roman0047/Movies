@@ -50,6 +50,20 @@ Use `NuxtImage` with the placeholder property to achieve the best lazy loading a
 
 Use `useVirtualList` composable to render cards, posts and other large lists. [Example](https://vueuse.org/core/useVirtualList/)
 
+Use `shallowRef` to prevent extra list re-rendering, it creates a state that is reactive only at the root level
+
+```js
+const items = shallowRef([])
+
+// this won't trigger rerender
+items.value.push({ title: 'test' })
+items.value[0].title = 'test'
+
+// this does
+items.value = data
+items.value = [...items.value, { title: 'test' }]
+```
+
 ### General vue optimization
 
 **Prevent all list items from being re-rendered** by passing clear props to components. It's more effective

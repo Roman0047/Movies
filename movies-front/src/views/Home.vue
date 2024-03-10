@@ -73,7 +73,7 @@
 </template>
 
 <script setup>
-import {onMounted, ref, watch} from 'vue'
+import {onMounted, ref, shallowRef, watch} from 'vue'
 import Movies from '@/components/Movies.vue'
 import axios from "axios";
 import Validation from "@/composables/Validation";
@@ -83,11 +83,11 @@ import {useRoute} from "vue-router";
 const { handleErrors } = Validation()
 const route = useRoute()
 
-const types = ref([])
-const genres = ref([])
-const companies = ref([])
-const years = ref([])
-const items = ref([])
+const types = shallowRef([])
+const genres = shallowRef([])
+const companies = shallowRef([])
+const years = shallowRef([])
+const items = shallowRef([])
 const pagination = ref({
   current_page: 1,
   first_page: 1,
